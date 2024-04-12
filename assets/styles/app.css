@@ -1,0 +1,305 @@
+/* Base styles */
+body, label, button, h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Cinzel', serif; /* Police de caractère romaine */
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Fond légèrement teinté */
+    color: #333; /* Couleur de texte principale */
+}
+
+/* Style de base pour les liens */
+a {
+    color: #8b0000; /* Rouge foncé pour les liens */
+    text-decoration: none; /* Supprimer le soulignement par défaut */
+    transition: color 0.3s ease; /* Transition en douceur pour le changement de couleur */
+}
+
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #8b0000; /* Rouge foncé pour la barre de navigation */
+    color: #fff; /* Texte blanc pour le contraste */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Navbar styles */
+.navbar__logo {
+    font-family: 'Trajan Pro', serif; /* Police de caractère romaine pour le logo */
+    font-size: 24px;
+}
+
+.navbar__menu {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar__item {
+    margin-right: 20px;
+}
+
+.navbar__item a {
+    color: #fff; /* Texte blanc pour les liens */
+    text-decoration: none;
+}
+
+/* Grid de photos */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+}
+
+/* Carte photo */
+.photo-card {
+    border: 1px solid #8b0000; /* Bordure rouge foncé */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.photo-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.photo-card__info {
+    padding: 10px;
+}
+
+.photo-card__title {
+    margin-top: 0;
+    font-size: 18px;
+    font-family: 'Trajan Pro', serif; /* Police de caractère romaine pour les titres */
+}
+
+.photo-card__description {
+    margin-bottom: 10px;
+}
+
+.photo-card__price {
+    font-weight: bold;
+    color: #8b0000; /* Rouge foncé pour le prix */
+}
+
+.photo-card__tags {
+    margin-top: 10px;
+}
+
+.photo-card__tag {
+    display: inline-block;
+    background-color: #f5f5f5; /* Fond gris clair pour les tags */
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.add-to-cart-link {
+    display: block;
+    text-align: center;
+    background-color: #8b0000; /* Rouge foncé pour le lien d'ajout au panier */
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-link:hover {
+    background-color: #b22222; /* Rouge plus vif au survol */
+}
+
+/* Tableau */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f5f5f5; /* Fond gris clair pour les en-têtes */
+}
+
+/* Liens "show" et "edit" */
+.table a {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 3px 8px;
+    background-color: #8b0000; /* Rouge foncé pour les liens */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.table a:hover {
+    background-color: #b22222; /* Rouge plus vif au survol */
+}
+
+/* Lien "Create new" */
+.create-new-link {
+    display: block;
+    margin-top: 20px;
+    padding: 8px 12px;
+    background-color: #8b0000; /* Rouge foncé pour le lien */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    width: 150px;
+    text-align: center;
+}
+
+.create-new-link:hover {
+    background-color: #b22222; /* Rouge plus vif au survol */
+}
+
+/* Boutons */
+button {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #8b0000; /* Rouge foncé pour les boutons */
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Boutons au survol */
+button:hover {
+    background-color: #b22222; /* Rouge plus vif au survol */
+}
+
+/* Boutons au focus */
+button:focus {
+    background-color: #b22222; /* Rouge plus vif lorsqu'il est en focus */
+    box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.5);
+}
+
+/* Boutons actifs */
+button:active {
+    background-color: #b22222; /* Rouge plus vif lorsqu'il est activé */
+}
+
+/* Boutons désactivés */
+button:disabled {
+    background-color: #6c757d; /* Gris pour les boutons désactivés */
+}
+
+/* Reset de base pour les formulaires */
+form, input, textarea, button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: 'Trajan Pro', serif; /* Police de caractère romaine */
+}
+
+main {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* Champs de saisie */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus {
+    border-color: #8b0000; /* Rouge foncé lorsqu'il est en focus */
+}
+
+/* Listes à choix multiples */
+select[multiple],
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+select[multiple]:focus,
+select:focus {
+    border-color: #8b0000; /* Rouge foncé lorsqu'il est en focus */
+}
+
+/* Boutons de soumission */
+button,
+input[type="submit"] {
+    background-color: #8b0000; /* Rouge foncé pour les boutons de soumission */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #b22222; /* Rouge plus vif au survol */
+}
+
+/* Bouton annuler */
+.cancel-button {
+    background-color: #ccc;
+    color: #333;
+}
+
+.cancel-button:hover {
+    background-color: #bbb;
+}
+
+.sesterce
+{
+    margin-bottom:-10px;
+}
+
+.rome-image {
+    background-image: url(../../img/rome.jpg);
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

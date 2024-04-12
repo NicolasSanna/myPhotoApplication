@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    {{ form_errors(form) }}
+
+{{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.customer.name) }}
+    {{ form_row(form.customer.age) }}
+    {{ form_row(form.customer.city) }}
+    {{ form_row(form.customer.customerNumber) }}
+    {{ form_row(form.customer.createdAt) }}
+    {{ form_row(form.customer.modifiedAt) }}
+    {{ form_row(form.agreeTerms) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+{% endblock %}
