@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CartController extends AbstractController
 {
     #[Route('/cart/add/{id}', name: 'app_cart_add', methods:['GET'])]
-    public function addToCart(SessionInterface $session, PhotoRepository $photoRepository, int $id): Response
+    public function addToCart(SessionInterface $session, PhotoRepository $photoRepository, int $id): JsonResponse
     {
         // Récupérer la photo depuis son ID
         $photo = $photoRepository->find($id);
@@ -64,20 +64,47 @@ class CartController extends AbstractController
         ]);
     }
 
-        #[Route('/cart/remove/{id}', name: 'app_cart_remove')]
-    public function removeFromCart(SessionInterface $session, int $id): RedirectResponse
+    #[Route('/cart/remove/{id}/{quantity}', name: 'app_cart_remove')]
+    public function removeFromCart(SessionInterface $session, int $id, int $quantity): RedirectResponse
+    {
+        $cart = $session->get('cart', []);
+    
+        // Recherche de l'index de l'élément à supprimer dans le panier
+        $index = array_search($id, array_column($cart, 'id'));
+    
+        // Si l'élément existe dans le panier
+        if ($index !== false) 
+        {
+            // Si la quantité à supprimer est inférieure ou égale à la quantité dans le panier
+            if ($quantity <= $cart[$index]['quantity']) 
+            {
+                // Décrémenter la quantité dans le panier
+                $cart[$index]['quantity'] -= $quantity;
+                // Si la quantité est réduite à 0, supprimer complètement l'article du panier
+                if ($cart[$index]['quantity'] <= 0) {
+                    unset($cart[$index]);
+                }
+            }
+            $session->set('cart', array_values($cart)); // Réindexer le tableau après la modification
+        }
+    
+        return $this->redirectToRoute('cart_index');
+    }
+
+    #[Route('/cart/add/quantity/{id}', name: 'app_cart_add_quantity')]
+    public function addToCartQuantity(SessionInterface $session, int $id): RedirectResponse
     {
         $cart = $session->get('cart', []);
 
-        // Recherche de l'index de l'élément à supprimer dans le panier
+        // Recherche de l'index de l'élément à ajouter dans le panier
         $index = array_search($id, array_column($cart, 'id'));
 
-        // Suppression de l'élément du panier s'il existe
         if ($index !== false) 
         {
-            unset($cart[$index]);
-            $session->set('cart', array_values($cart)); // Réindexer le tableau après la suppression
+            $cart[$index]['quantity']++;
         }
+
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('cart_index');
     }

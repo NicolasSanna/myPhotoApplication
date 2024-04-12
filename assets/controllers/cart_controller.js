@@ -1,9 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
 
-export default class extends Controller {
+export default class extends Controller 
+{
     static targets = ["badge"];
   
-    async addToCart(event) {
+    async addToCart(event) 
+    {
         event.preventDefault();
 
         let productId = this.element.dataset.productId;
@@ -11,8 +13,13 @@ export default class extends Controller {
 
         try 
         {
+            let url = `/cart/add/${productId}`;
 
-            const response = await fetch(`/cart/add/${productId}`, { method: "GET" });
+            let options = { 
+                method: "GET" 
+            };
+            
+            const response = await fetch(url, options);
 
             if (!response.ok) 
             {
@@ -23,7 +30,7 @@ export default class extends Controller {
 
             cartBadge.textContent = data.cart.length;
 
-            alert(`Produit ajouté au panier !, il y a ${data.cart.length} produit(s) dans le panier`);
+           window.alert(`Produit ajouté au panier !, il y a ${data.cart.length} produit(s) dans le panier`);
         } 
         catch (error) 
         {

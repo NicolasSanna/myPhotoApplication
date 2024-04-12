@@ -19,10 +19,20 @@
 	<body>
 		<header>
 			<nav class="navbar">
-				<div class="navbar__logo">myPhotoApplication</div>
+				<h1><a href="{{ path('app_home') }}" class="navbar__logo">MyPhotoApplication</a></h1>
 				<ul class="navbar__menu">
 					<li class="navbar__item">
 						<a href="{{ path('app_home') }}">Accueil</a>
+					</li>
+					<li class="navbar__item-cart">
+            			<a class="navbar__item-cart-link" href="{{ path('cart_index')}}"><span id="cart-badge" data-target="cart.badge">0</span> 
+							<div>
+								<img class="img-cart"src="{{ asset('img/shopping-cart.png')}}" alt="panier">
+							</div>
+						</a>
+        			</li>
+					<li class="navbar__item">
+						<a href="{{ path('app_photo_index') }}">Photos</a>
 					</li>
 					{% if app.user %}
 					<li class="navbar__item">
@@ -42,12 +52,11 @@
 						<a href="{{ path('app_register')}}">S'inscrire</a>
 					</li>
 					{% endif %}
-					<li class="navbar__item">
-						<a href="{{ path('app_photo_index') }}">Photos</a>
-					</li>
 				</ul>
 			</nav>
-					<div class="rome-image">
+				<div class="rome-image">
+					
+				</div>
 		</header>
 		<main>
 

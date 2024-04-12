@@ -24,14 +24,26 @@
                     <tr>
                         <td>{{ item.title }}</td>
                         <td>{{ item.price }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <a href="{{ path('app_cart_remove', {'id': item.id, 'quantity': 1}) }}" class="btn btn-outline-danger">-</a>
+                            {{ item.quantity }}
+                            <a href="{{ path('app_cart_add_quantity', {'id': item.id}) }}" class="btn btn-outline-success">+</a>
+                        </td>
                         <td>{{ item.price * item.quantity }}</td>
                         <td>
-                            <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-danger">Supprimer du panier</a>
+                            <a href="{{ path('app_cart_remove', {'id': item.id, 'quantity': item.quantity}) }}" class="btn btn-danger">Supprimer du panier</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
+
+    {% if app.user %}
+        <a href="{{ path('order_create') }}" class="btn btn-danger">Commander</a>
+    {% else %}
+        <a href="{{ path('app_register')}}" class="btn btn-danger">S'inscrire</a> ou <a href="{{ path('app_login')}}" class="btn btn-danger">Se connecter</a>
+    {% endif %}
+
 {% endblock %}
+
