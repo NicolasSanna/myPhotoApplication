@@ -13,9 +13,9 @@ export default class extends Controller
 
         try 
         {
-            let url = `/cart/add/${productId}`;
+            const url = `/cart/add/${productId}`;
 
-            let options = { 
+            const options = { 
                 method: "GET" 
             };
             

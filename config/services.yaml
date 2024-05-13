@@ -6,7 +6,20 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
+    # ...
+    App\Service\TopTagsService:
+        autowire: true
+        autoconfigure: false
+        calls:
+            - ['setTopTags', ['@=service("App\Repository\TagRepository").getTopTagsWithPhotoCount()']]
+
+    App\Twig\TopTagsExtension:
+        class: App\Twig\TopTagsExtension
+        arguments:
+            - '@App\Service\TopTagsService'
+        tags:
+            - { name: twig.extension }
+            
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.

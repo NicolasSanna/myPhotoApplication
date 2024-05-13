@@ -21,6 +21,23 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function getTopTagsWithPhotoCount(int $limit = 4): array
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery('
+            SELECT COUNT(p.id) AS count_tag, t.name
+            FROM App\Entity\Photo p
+            INNER JOIN p.tags t
+            GROUP BY t.id
+            ORDER BY count_tag DESC
+        ');
+
+        $query->setMaxResults($limit);
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */
