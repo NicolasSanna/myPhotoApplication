@@ -1,39 +1,41 @@
 <nav class="navbar">
-				<h1><a href="{{ path('app_home') }}" class="navbar__logo">MyPhotoApplication</a></h1>
-				<ul class="navbar__menu">
-					<li class="navbar__item">
-						<a href="{{ path('app_home') }}">Accueil</a>
-					</li>
-					<li class="navbar__item-cart">
-            			<a class="navbar__item-cart-link" href="{{ path('cart_index')}}"><span id="cart-badge" data-controller="cartitems" data-target="cart.badge">0</span> 
-							<div>
-								<img class="img-cart"src="{{ asset('img/shopping-cart.png')}}" alt="panier">
-							</div>
-						</a>
-        			</li>
-					<li class="navbar__item">
-						<a href="{{ path('app_photo_index') }}">Photos</a>
-					</li>
-					{% if app.user %}
-					<li class="navbar__item">
-						<a href="#">Bonjour {{app.user.email}}</a>
-					</li>
-					<li class="navbar__item">
-						<a href="{{ path('cart_index')}}">Voir mon panier</a>
-					</li>
-					<li class="navbar__item">
-						<a href="{{ path('app_logout')}}">Se déconnecter</a>
-					</li>
-					{% else %}
-					<li class="navbar__item">
-						<a href="{{ path('app_login')}}">Se connecter</a>
-					</li>
-					<li class="navbar__item">
-						<a href="{{ path('app_register')}}">S'inscrire</a>
-					</li>
-					{% endif %}
-				</ul>
-			</nav>
-{% for tag in get_top_tags() %}
-    {{ tag.name }} - {{ tag.count_tag }}
-{% endfor %}
+	<h1><a href="{{ path('app_home') }}" class="navbar__logo">MyPhotoApplication</a></h1>
+	<ul class="navbar__menu">
+		<li class="navbar__item">
+			<a href="{{ path('app_home') }}">Accueil</a>
+		</li>
+		<li class="navbar__item-cart">
+			<a class="navbar__item-cart-link" href="{{ path('cart_index')}}"><span id="cart-badge" data-controller="cartitems" data-target="cart.badge">0</span> 
+				<div>
+					<img class="img-cart"src="{{ asset('img/shopping-cart.png')}}" alt="panier">
+				</div>
+			</a>
+		</li>
+		<li class="navbar__item">
+			<a href="{{ path('app_photo_index') }}">Photos</a>
+		</li>
+		{% if app.user %}
+		<li class="navbar__item">
+			<a href="#">Bonjour {{app.user.email}}</a>
+		</li>
+		<li class="navbar__item">
+			<a href="{{ path('cart_index')}}">Voir mon panier</a>
+		</li>
+		<li class="navbar__item">
+			<a href="{{ path('app_logout')}}">Se déconnecter</a>
+		</li>
+		{% else %}
+		<li class="navbar__item">
+			<a href="{{ path('app_login')}}">Se connecter</a>
+		</li>
+		<li class="navbar__item">
+			<a href="{{ path('app_register')}}">S'inscrire</a>
+		</li>
+		{% endif %}
+		<div class="tags">
+			{% for tag in get_top_tags() %}
+    			<p><a href="{{ path('app_tag_show', {'id': tag.id}) }}">{{ tag.name }}</a></p>
+			{% endfor %}
+		</div>
+		{{ render(controller('App\\Controller\\TagController::searchAutocomplete')) }}
+</nav>

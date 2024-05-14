@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
+use App\Form\TagFormAutocompleteType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tag')]
 class TagController extends AbstractController
@@ -17,8 +19,33 @@ class TagController extends AbstractController
     #[Route('/', name: 'app_tag_index', methods: ['GET'])]
     public function index(TagRepository $tagRepository): Response
     {
+        $form = $this->createForm(TagFormAutocompleteType::class);
         return $this->render('tag/index.html.twig', [
             'tags' => $tagRepository->findAll(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/searchautocomplete', name: 'app_tag_index_autocomplete', methods: ['GET', 'POST'])]
+    public function searchAutocomplete(Request $request): Response
+    {  
+        $form = $this->createForm(TagFormAutocompleteType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+             // Récupère l'objet Tag sélectionné
+            /**
+             * @var Tag $tag
+             */
+            $tag = $form->get('tag')->getData();
+
+            if ($tag) 
+            {
+                return $this->redirectToRoute('app_tag_show', ['id' => $tag->getId()]);
+            }
+        }
+        return $this->render('tag/search.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

@@ -18,9 +18,22 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tag_index') }}">back to list</a>
+    <h2>Photos</h2>
+    
+    <div class="photo-grid">
+            {% for photo in tag.photos %}
+                <div class="photo-card">
+                    <a href="{{ path('app_photo_show', { 'slug': photo.slug }) }}">
+                        <img class="photo-card__image" src="{{ photo.imageUrl }}" alt="{{ photo.title }}">
+                        <div class="photo-card__info">
+                            <h2 class="photo-card__title">{{ photo.title }}</h2>
+                            <p class="photo-card__description">{{ photo.description }}</p>
+                            <p class="photo-card__price">{{ photo.price }} sesterces <img class="sesterce" style="width:30px;" src="{{ asset('img/sesterce.jpg') }}" alt="sesterce"></p>
+                        </div>
+                    </a>
+                    <a href="{{ path('app_cart_add', { 'id': photo.id }) }}" class="add-to-cart-link" data-controller="cart" data-action="click->cart#addToCart" data-product-id="{{ photo.id }}">Ajouter au panier</a>
+                </div>
+            {% endfor %}
+        </div>
 
-    <a href="{{ path('app_tag_edit', {'id': tag.id}) }}">edit</a>
-
-    {{ include('tag/_delete_form.html.twig') }}
 {% endblock %}

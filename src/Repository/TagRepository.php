@@ -21,12 +21,18 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findByName($name)
+    {
+        return $this->searchByName($name);
+    }
+
+
     public function getTopTagsWithPhotoCount(int $limit = 4): array
     {
         $entityManager = $this->getEntityManager();
         
         $query = $entityManager->createQuery('
-            SELECT COUNT(p.id) AS count_tag, t.name
+            SELECT COUNT(p.id) AS count_tag, t.name, t.id
             FROM App\Entity\Photo p
             INNER JOIN p.tags t
             GROUP BY t.id
@@ -36,6 +42,28 @@ class TagRepository extends ServiceEntityRepository
         $query->setMaxResults($limit);
 
         return $query->getResult();
+    }
+
+       /**
+     * @param string $query
+     * @return Tag[]
+     */
+    public function searchByName(string $query): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOneByName(string $name): ?Tag
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
