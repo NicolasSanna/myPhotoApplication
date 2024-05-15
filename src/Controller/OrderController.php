@@ -16,8 +16,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Entity\User;
 
-#[IsGranted('ROLE_CUSTOMER')]
+#[IsGranted('ROLE_CUSTOMER, ROLE_ADMIN')]
 #[Route('/order')]
 class OrderController extends AbstractController
 {

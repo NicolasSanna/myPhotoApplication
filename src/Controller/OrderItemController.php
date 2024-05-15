@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\OrderItem;
+use App\Entity\Order;
 use App\Form\OrderItemType;
 use App\Repository\OrderItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/order/item')]
+#[Route('/order-item')]
 class OrderItemController extends AbstractController
 {
     #[Route('/', name: 'app_order_item_index', methods: ['GET'])]

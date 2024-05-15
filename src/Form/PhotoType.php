@@ -9,6 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class PhotoType extends AbstractType
 {
@@ -17,7 +19,22 @@ class PhotoType extends AbstractType
         $builder
             ->add('description')
             ->add('title')
-            ->add('imageUrl')
+            ->add('imageUrl', FileType::class, [
+                'required' => false,
+                'attr' => ['class' => 'Form-component-input'],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2000k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Le site accepte uniquement les fichiers PNG et JPG',
+                    ])
+                ],
+                'label' => 'Image',
+                'data_class' => null,
+            ])
             // ->add('metaInfo')
             ->add('price', IntegerType::class)
             ->add('createdAt', null, [

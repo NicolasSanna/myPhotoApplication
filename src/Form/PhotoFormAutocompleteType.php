@@ -8,14 +8,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagFormAutocompleteType extends AbstractType
+class PhotoFormAutocompleteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('tag', TagAutocompleteField::class, [
-                'label' => 'Recherche Tag',
-                'placeholder' => 'Rechercher un tag...'
+            ->add('photo', PhotoAutocompleteField::class, [
+                'label' => 'Recherche',
+                'placeholder' => 'Rechercher...',
+                'required' => false
             ]);
     }
 

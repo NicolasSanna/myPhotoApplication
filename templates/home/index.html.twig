@@ -11,7 +11,7 @@
         <div class="photo-grid">
             {% for photo in photos %}
                 <div class="photo-card">
-                    <a href="{{ path('app_photo_show', { 'slug': photo.slug }) }}">
+                    <a href="{{ path('app_photo_show', { 'id': photo.id }) }}">
                         <img class="photo-card__image" src="{{ photo.imageUrl }}" alt="{{ photo.title }}">
                         <div class="photo-card__info">
                             <h2 class="photo-card__title">{{ photo.title }}</h2>

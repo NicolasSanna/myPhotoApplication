@@ -16,7 +16,7 @@
                 <th>Prix</th>
                 <th>Créé</th>
                 <th>Modifié</th>
-                <th>Ations</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,14 +25,16 @@
                 <td>{{ photo.id }}</td>
                 <td>{{ photo.description }}</td>
                 <td>{{ photo.title }}</td>
-                <td>{{ photo.imageUrl }}</td>
+                <td><img style="width:100px;" class="Article-boxImg-img"  src="{{ asset('image_directory/' ~ photo.imageUrl ~ '') }}"  alt="{{ photo.imageUrl }}"></td>
                 <td>{{ photo.metaInfo ? photo.metaInfo|json_encode : '' }}</td>
                 <td>{{ photo.price }} sesterces <img class="sesterce" style="width:30px;"src="{{ asset('img/sesterce.jpg') }}" alt="sesterce"></td>
                 <td>{{ photo.createdAt ? 'Le ' ~ photo.createdAt|date('d/m/Y à H:i') : '' }}</td>
                 <td>{{ photo.modifiedAt ? 'Le ' ~ photo.modifiedAt|date('d/m/Y à H:i') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_photo_show', {'slug': photo.slug}) }}">Voir</a>
-                    <a href="{{ path('app_photo_edit', {'slug': photo.slug}) }}">Modifier</a>
+                    <a href="{{ path('app_photo_show', {'id': photo.id}) }}">Voir</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_photo_edit', {'slug': photo.slug}) }}">Modifier</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -42,6 +44,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_photo_new') }}" class="create-new-link">Créer une nouvelle photo</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_photo_new') }}" class="create-new-link">Créer une nouvelle photo</a>
+    {% endif %}
 {% endblock %}

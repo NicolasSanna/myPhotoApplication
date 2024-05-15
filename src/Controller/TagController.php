@@ -3,52 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Entity\Photo;
 use App\Form\TagType;
 use App\Repository\TagRepository;
 use App\Form\TagFormAutocompleteType;
+use App\Form\PhotoFormAutocompleteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tag')]
 class TagController extends AbstractController
 {
-    #[Route('/', name: 'app_tag_index', methods: ['GET'])]
-    public function index(TagRepository $tagRepository): Response
-    {
-        $form = $this->createForm(TagFormAutocompleteType::class);
-        return $this->render('tag/index.html.twig', [
-            'tags' => $tagRepository->findAll(),
-            'form' => $form->createView()
-        ]);
-    }
-
-    #[Route('/searchautocomplete', name: 'app_tag_index_autocomplete', methods: ['GET', 'POST'])]
-    public function searchAutocomplete(Request $request): Response
-    {  
-        $form = $this->createForm(TagFormAutocompleteType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-             // Récupère l'objet Tag sélectionné
-            /**
-             * @var Tag $tag
-             */
-            $tag = $form->get('tag')->getData();
-
-            if ($tag) 
-            {
-                return $this->redirectToRoute('app_tag_show', ['id' => $tag->getId()]);
-            }
-        }
-        return $this->render('tag/search.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
+    
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_tag_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -77,6 +49,7 @@ class TagController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
@@ -95,6 +68,7 @@ class TagController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_tag_delete', methods: ['POST'])]
     public function delete(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {

@@ -10,7 +10,7 @@ export default class extends Controller {
             {
             try 
             {
-                const response = await fetch(`/tag/search/${encodeURIComponent(query)}`);
+                const response = await fetch(`/photo/search/${encodeURIComponent(query)}`);
                 if (!response.ok) 
                 {
                     

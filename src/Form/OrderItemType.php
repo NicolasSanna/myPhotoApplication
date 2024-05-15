@@ -17,10 +17,10 @@ class OrderItemType extends AbstractType
         $builder
             ->add('quantity')
             ->add('price')
-            ->add('_order', EntityType::class, [
-                'class' => Order::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('_order', EntityType::class, [
+            //     'class' => Order::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('photo', EntityType::class, [
                 'class' => Photo::class,
                 'choice_label' => 'id',
