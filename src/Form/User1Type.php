@@ -2,16 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Customer;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class UserType extends AbstractType
+class User1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,12 +28,14 @@ class UserType extends AbstractType
                 'expanded' => true,
                 // 'expanded' => false, // Utiliser un dropdown plutôt que des checkboxes
             ])
-            ->add('token')
-            ->add('tokenExpireAt', DateTimeType::class)
             ->add('password')
+            ->add('token')
+            ->add('tokenExpireAt', null, [
+                'widget' => 'single_text',
+            ])
             ->add('customer', EntityType::class, [
                 'class' => Customer::class,
-                'choice_label' => 'name',
+                'choice_label' => 'id',
             ])
         ;
     }

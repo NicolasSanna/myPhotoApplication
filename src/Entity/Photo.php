@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PhotoRepository::class)]
 class Photo
@@ -14,33 +15,42 @@ class Photo
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['photo_details'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['photo_details'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['photo_details'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['photo_details'])]
     private ?string $imageUrl = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['photo_details'])]
     private ?array $metaInfo = null;
 
     #[ORM\Column]
+    #[Groups(['photo_details'])]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Groups(['photo_details'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['photo_details'])]
     private ?\DateTimeImmutable $modifiedAt = null;
 
     /**
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'photos')]
+    #[Groups(['photo_details'])]
     private Collection $tags;
 
     /**

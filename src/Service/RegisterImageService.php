@@ -26,7 +26,7 @@ class RegisterImageService
         }
 
         // Récupération du fichier image
-        $file = $this->form->get('imageUpload')->getData();
+        $file = $this->form->get('imageUrl')->getData();
         
         if (!$file) {
             return null; // Si aucun fichier n'est uploadé, retourner null

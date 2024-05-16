@@ -19,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/tag')]
 class TagController extends AbstractController
 {
+    #[Route('/', name:'app_tag_index', methods:['GET'])]
+    public function index(TagRepository $tagRepository): Response
+    {
+         return $this->render('tag/index.html.twig', [
+            'tags' => $tagRepository->findAll()
+         ]);
+    }
     
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_tag_new', methods: ['GET', 'POST'])]

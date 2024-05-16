@@ -12,6 +12,10 @@ services:
     App\Services\RegisterImageService:
         arguments:
             $imageDirectory: '%image_directory%'
+
+    App\Services\RegisterImageApiService:
+        arguments:
+            $imageDirectory: '%image_directory%'
             
     App\Service\TopTagsService:
         autowire: true

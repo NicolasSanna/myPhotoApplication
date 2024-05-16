@@ -21,6 +21,23 @@ class PhotoRepository extends ServiceEntityRepository
         parent::__construct($registry, Photo::class);
     }
 
+    public function searchPhotos(string $searchQuery): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager
+            ->createQuery(
+                "SELECT p
+                 FROM App\Entity\Photo p
+                 WHERE p.title LIKE :searchQuery
+                    OR p.description LIKE :searchQuery
+                    OR p.id = :searchQuery"
+            )
+            ->setParameter('searchQuery', '%' . $searchQuery . '%');
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Photo[] Returns an array of Photo objects
 //     */
