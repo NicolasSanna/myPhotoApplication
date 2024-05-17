@@ -25,7 +25,12 @@
                 <td>{{ photo.id }}</td>
                 <td>{{ photo.description }}</td>
                 <td>{{ photo.title }}</td>
-                <td><img style="width:100px;" class="Article-boxImg-img"  src="{{ asset('image_directory/' ~ photo.imageUrl ~ '') }}"  alt="{{ photo.imageUrl }}"></td>
+                <td>{% if photo.imageUrl starts with 'http' %}
+                        <img class="photo-card__image" src="{{ photo.imageUrl }}" alt="{{ photo.title }}">
+                    {% else %}
+                        <img style="width:100px;" class="Article-boxImg-img" src="{{ asset('image_directory/' ~ photo.imageUrl) }}" alt="{{ photo.imageUrl }}">
+                    {% endif %}
+                </td>
                 <td>{{ photo.metaInfo ? photo.metaInfo|json_encode : '' }}</td>
                 <td>{{ photo.price }} sesterces <img class="sesterce" style="width:30px;"src="{{ asset('img/sesterce.jpg') }}" alt="sesterce"></td>
                 <td>{{ photo.createdAt ? 'Le ' ~ photo.createdAt|date('d/m/Y à H:i') : '' }}</td>

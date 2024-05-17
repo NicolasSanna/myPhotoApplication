@@ -12,7 +12,11 @@
             {% for photo in photos %}
                 <div class="photo-card">
                     <a href="{{ path('app_photo_show', { 'id': photo.id }) }}">
-                        <img class="photo-card__image" src="{{ photo.imageUrl }}" alt="{{ photo.title }}">
+                        {% if photo.imageUrl starts with 'http' %}
+                            <img class="photo-card__image" src="{{ photo.imageUrl }}" alt="{{ photo.title }}">
+                        {% else %}
+                            <img style="width:100%;" class="Article-boxImg-img" src="{{ asset('image_directory/' ~ photo.imageUrl) }}" alt="{{ photo.imageUrl }}">
+                        {% endif %}
                         <div class="photo-card__info">
                             <h2 class="photo-card__title">{{ photo.title }}</h2>
                             <p class="photo-card__description">{{ photo.description }}</p>

@@ -7,5 +7,21 @@
 
     <p>Votre commande à bien été passée chez nous !</p>
 
+    <h1>Détails de la commande</h1>
+    <p>Numéro de commande : {{ lastOrder.id }}</p>
+    <p>Adresse de livraison : {{ lastOrder.deliveryAddress }}</p>
+    <p>Date de création : {{ lastOrder.createdAt|date('Y-m-d H:i:s') }}</p>
+
+    <h2>Items de la commande</h2>
+    <ul>
+        {% for orderItem in lastOrder.orderItems %}
+            <li>
+                <strong>Photo :</strong> {{ orderItem.photo.title }}<br>
+                <strong>Quantité :</strong> {{ orderItem.quantity }}<br>
+                <strong>Prix unitaire :</strong> {{ orderItem.price }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+
     <a href="{{ path('app_home') }}">Revenir à la page d'accueil</a>
 {% endblock %}

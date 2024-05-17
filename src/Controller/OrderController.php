@@ -2,26 +2,28 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Entity\OrderItem;
-use App\Repository\CustomerRepository;
+use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Repository\PhotoRepository;
-use App\Repository\UserRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use App\Entity\User;
 
-#[IsGranted('ROLE_CUSTOMER, ROLE_ADMIN')]
 #[Route('/order')]
 class OrderController extends AbstractController
 {
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/', name: 'app_order_index', methods: ['GET'])]
     public function index(OrderRepository $orderRepository): Response
     {
@@ -30,6 +32,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -50,6 +53,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/order/create', name: 'order_create')]
     public function createOrder(SessionInterface $session, PhotoRepository $photoRepository,  EntityManagerInterface $entityManager, UserRepository $userRepository, CustomerRepository $customerRepository): Response
     {
@@ -96,12 +100,33 @@ class OrderController extends AbstractController
         return $this->redirectToRoute('order_confirmation');
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/order/confirmation', name: 'order_confirmation')]
-    public function confirmation(): Response
+    public function confirmation(OrderRepository $orderRepository): Response
     {
-        return $this->render('order/confirmation.html.twig');
+        // Récupérer l'utilisateur actuellement connecté
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        // Récupérer le client associé à l'utilisateur
+        $customer = $user->getCustomer();
+
+        // Récupérer la dernière commande du client
+        $lastOrder = $orderRepository->findOneBy(['customer' => $customer], ['createdAt' => 'DESC']);
+        // Vérifier si une commande a été trouvée
+        if (!$lastOrder) 
+        {
+            // Gérer le cas où aucune commande n'a été trouvée
+            // Par exemple, rediriger vers une page d'erreur ou afficher un message approprié
+        }
+        return $this->render('order/confirmation.html.twig', [
+            'lastOrder' => $lastOrder
+        ]);
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/{id}', name: 'app_order_show', methods: ['GET'])]
     public function show(Order $order): Response
     {
@@ -110,6 +135,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Order $order, EntityManagerInterface $entityManager): Response
     {
@@ -128,6 +154,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_CUSTOMER")'))]
     #[Route('/{id}', name: 'app_order_delete', methods: ['POST'])]
     public function delete(Request $request, Order $order, EntityManagerInterface $entityManager): Response
     {
